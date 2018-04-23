@@ -6,4 +6,11 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :allTodos, !types[Types::TodoType] do
     resolve -> (obj, args, ctx) { Todo.all }
   end
+
+  field :getTodo, Types::TodoType do
+    argument :id, !types.ID
+    resolve -> (obj, args, ctx) do
+      Todo.find_by(id: args[:id])
+    end
+  end
 end
